@@ -5,7 +5,9 @@ import Link from 'next/link';
 import styles from './HeroSection.module.css';
 
 interface HeroContent {
+  preTitle?: string;
   slogan?: string;
+  tagline?: string;
   subslogan?: string;
   hero_images?: { desktop: string; mobile: string | null }[];
 }
