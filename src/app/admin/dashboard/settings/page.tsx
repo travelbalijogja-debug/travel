@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, CSSProperties } from 'react';
 import { fetchSupabase, updateSupabase, uploadFile } from '@/lib/supabaseFetch';
 
 export default function SettingsPage() {
@@ -159,16 +159,16 @@ export default function SettingsPage() {
   );
 }
 
-const sectionStyle = {
+const sectionStyle: CSSProperties = {
   background: 'var(--card-bg-even)',
   padding: '2rem',
   borderRadius: '12px',
   border: '1px solid var(--line-even)',
   marginBottom: '2rem'
 };
-const titleStyle = { fontSize: '1.2rem', fontWeight: 700, marginBottom: '1.5rem' };
-const formStyle = { display: 'flex', flexDirection: 'column', gap: '1.2rem' };
-const inputGroup = { display: 'flex', flexDirection: 'column', gap: '0.5rem' };
-const labelStyle = { fontSize: '0.85rem', fontWeight: 600, color: 'var(--gray-500)' };
-const inputStyle = { padding: '0.8rem', borderRadius: '6px', border: '1px solid var(--line-even)', background: 'transparent', color: '#ffffff' };
-const btnStyle = { padding: '0.8rem', background: 'var(--text-even)', color: 'var(--bg-even)', border: 'none', borderRadius: '6px', fontWeight: 700, cursor: 'pointer', alignSelf: 'flex-start' };
+const titleStyle: CSSProperties = { fontSize: '1.2rem', fontWeight: 700, marginBottom: '1.5rem' };
+const formStyle: CSSProperties = { display: 'flex', flexDirection: 'column', gap: '1.2rem' };
+const inputGroup: CSSProperties = { display: 'flex', flexDirection: 'column', gap: '0.5rem' };
+const labelStyle: CSSProperties = { fontSize: '0.85rem', fontWeight: 600, color: 'var(--gray-500)' };
+const inputStyle: CSSProperties = { padding: '0.8rem', borderRadius: '6px', border: '1px solid var(--line-even)', background: 'transparent', color: '#ffffff', width: '100%' };
+const btnStyle: CSSProperties = { padding: '0.8rem', background: 'var(--text-even)', color: 'var(--bg-even)', border: 'none', borderRadius: '6px', fontWeight: 700, cursor: 'pointer', alignSelf: 'flex-start' };

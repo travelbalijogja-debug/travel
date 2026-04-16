@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, CSSProperties } from 'react';
 import { fetchSupabase, uploadFile, deleteSupabase, insertSupabase, updateSupabase } from '@/lib/supabaseFetch';
 
 export default function CMSAdmin() {
@@ -224,12 +224,12 @@ export default function CMSAdmin() {
   );
 }
 
-const cleanCard = { backgroundColor: 'rgba(255,255,255,0.02)', borderRadius: '16px', padding: '1rem', border: '1px solid rgba(255,255,255,0.05)' };
-const badgeStyle = { fontSize: '0.6rem', fontWeight: 800, color: '#2ecc71', backgroundColor: 'rgba(46,204,113,0.1)', padding: '0.2rem 0.5rem', borderRadius: '4px', letterSpacing: '0.05em' };
-const labelStyle = { fontSize: '0.7rem', fontWeight: 600, color: '#555' };
-const minimalInputStyle = { width: '100%', padding: '0.7rem', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.06)', background: '#000', color: '#fff', fontSize: '0.8rem', outline: 'none' };
-const primaryBtnStyle = { backgroundColor: '#2ecc71', color: '#fff', border: 'none', padding: '0.9rem', borderRadius: '10px', fontWeight: 800, fontSize: '0.8rem', cursor: 'pointer' };
-const secondaryBtnStyle = { backgroundColor: '#fff', color: '#000', border: 'none', padding: '0.9rem', borderRadius: '10px', fontWeight: 800, fontSize: '0.8rem', cursor: 'pointer' };
-const compactUploadStyle: React.CSSProperties = { height: '90px', border: '1px dashed rgba(255,255,255,0.1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', overflow: 'hidden', backgroundColor: '#000' };
-const fillImg: React.CSSProperties = { width: '100%', height: '100%', objectFit: 'cover' };
-const textIcons: React.CSSProperties = { textAlign: 'center', fontSize: '1rem', color: '#444', lineHeight: 1.3 };
+const cleanCard: CSSProperties = { backgroundColor: 'rgba(255,255,255,0.02)', borderRadius: '16px', padding: '1rem', border: '1px solid rgba(255,255,255,0.05)' };
+const badgeStyle: CSSProperties = { fontSize: '0.6rem', fontWeight: 800, color: '#2ecc71', backgroundColor: 'rgba(46,204,113,0.1)', padding: '0.2rem 0.5rem', borderRadius: '4px', letterSpacing: '0.05em' };
+const labelStyle: CSSProperties = { fontSize: '0.7rem', fontWeight: 600, color: '#555' };
+const minimalInputStyle: CSSProperties = { width: '100%', padding: '0.7rem', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.06)', background: '#000', color: '#fff', fontSize: '0.8rem', outline: 'none' };
+const primaryBtnStyle: CSSProperties = { backgroundColor: '#2ecc71', color: '#fff', border: 'none', padding: '0.9rem', borderRadius: '10px', fontWeight: 800, fontSize: '0.8rem', cursor: 'pointer' };
+const secondaryBtnStyle: CSSProperties = { backgroundColor: '#fff', color: '#000', border: 'none', padding: '0.9rem', borderRadius: '10px', fontWeight: 800, fontSize: '0.8rem', cursor: 'pointer' };
+const compactUploadStyle: CSSProperties = { height: '90px', border: '1px dashed rgba(255,255,255,0.1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', overflow: 'hidden', backgroundColor: '#000' };
+const fillImg: CSSProperties = { width: '100%', height: '100%', objectFit: 'cover' };
+const textIcons: CSSProperties = { textAlign: 'center', fontSize: '1rem', color: '#444', lineHeight: 1.3 };
