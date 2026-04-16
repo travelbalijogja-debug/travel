@@ -9,13 +9,13 @@ import { fetchSupabase } from '@/lib/supabaseFetch';
 export const revalidate = 0; // Disable cache so changes show up instantly
 
 export default async function Home() {
-  // Fetch real data from Supabase
+  // Fetch real data from Supabase in Parallel (Much Faster)
   const [settingsRaw, heroRaw, includedRaw, portfolioRaw, destRaw, packagesRaw] = await Promise.all([
     fetchSupabase('settings', 'limit=1'),
-    fetchSupabase('hero_banners', 'order=order_idx.asc'),
-    fetchSupabase('included_features', 'order=order_idx.asc'),
-    fetchSupabase('portfolios', 'order=order_idx.asc'),
-    fetchSupabase('destinations', 'order=order_idx.asc'),
+    fetchSupabase('hero_banners', 'order=created_at.desc'),
+    fetchSupabase('included_features', 'order=created_at.desc'),
+    fetchSupabase('portfolios', 'order=created_at.desc'),
+    fetchSupabase('destinations', 'order=created_at.desc'),
     fetchSupabase('packages', 'order=created_at.desc')
   ]);
 
