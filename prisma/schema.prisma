@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  username  String   @unique @db.VarChar(255)
+  password  String   @db.VarChar(255)
+  name      String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@map("admins")
+}
+
+model Settings {
+  id                       String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  logoText                 String?  @default("NORTH TOUR") @map("logo_text") @db.VarChar(255)
+  phoneNumber              String?  @default("+62 812-3456-7890") @map("phone_number") @db.VarChar(255)
+  slogan                   String?  @default("BUS TO THE SEA - FAST, ECONOMICAL, COMFORTABLE") @db.VarChar(500)
+  portfolioBackgroundImage String?  @default("https://picsum.photos/seed/bali_bg/1920/1080") @map("portfolio_background_image")
+  updatedAt                DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz()
+
+  @@map("settings")
+}
+
+model HeroBanner {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  imageUrl  String   @map("image_url")
+  orderIdx  Int?     @default(0) @map("order_idx")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@map("hero_banners")
+}
+
+model Package {
+  id          String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title       String           @db.VarChar(255)
+  description String
+  location    String           @db.VarChar(255)
+  duration    String           @db.VarChar(100)
+  priceAdult  Decimal          @map("price_adult") @db.Decimal(12,2)
+  priceChild  Decimal?         @map("price_child") @db.Decimal(12,2)
+  discount    Decimal?         @default(0) @db.Decimal(5,2)
+  mainImage   String?          @map("main_image")
+  gallery     PackageGallery[]
+  bookings    Booking[]
+  createdAt   DateTime         @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@map("packages")
+}
+
+model PackageGallery {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  packageId String   @map("package_id") @db.Uuid
+  imageUrl  String   @map("image_url")
+  package   Package  @relation(fields: [packageId], references: [id], onDelete: Cascade)
+
+  @@map("package_galleries")
+}
+
+model IncludedFeature {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  category   String   @db.VarChar(255)
+  categoryKr String?  @map("category_kr") @db.VarChar(255)
+  subtitle   String?  @db.VarChar(255)
+  imageUrl   String   @map("image_url")
+  orderIdx   Int?     @default(0) @map("order_idx")
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@map("included_features")
+}
+
+model Portfolio {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  caption   String   @db.VarChar(255)
+  imageUrl  String   @map("image_url")
+  orderIdx  Int?     @default(0) @map("order_idx")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@map("portfolios")
+}
+
+model Destination {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  place     String   @db.VarChar(255)
+  name      String   @db.VarChar(255)
+  imageUrl  String   @map("image_url")
+  orderIdx  Int?     @default(0) @map("order_idx")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@map("destinations")
+}
+
+model Booking {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  packageId     String   @map("package_id") @db.Uuid
+  name          String   @db.VarChar(255)
+  email         String   @db.VarChar(255)
+  phone         String   @db.VarChar(50)
+  bookingDate   DateTime @map("booking_date") @db.Date
+  status        String?  @default("PENDING") @db.VarChar(50)
+  paymentStatus String?  @default("UNPAID") @map("payment_status") @db.VarChar(50)
+  notes         String?
+  package       Package  @relation(fields: [packageId], references: [id])
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@map("bookings")
+}

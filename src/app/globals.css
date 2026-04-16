@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap');
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  --black: #000000;
+  --white: #ffffff;
+  --gray-50: #F9F9F9;
+  --gray-100: #f0f0f0;
+  --gray-200: #e0e0e0;
+  --gray-300: #c0c0c0;
+  --gray-400: #a0a0a0;
+  --gray-500: #808080;
+  --gray-600: #606060;
+  --gray-700: #404040;
+  --gray-800: #202020;
+  --gray-900: #101010;
+
+  /* LIGHT MODE (White -> Black -> White...) */
+  --bg-odd: var(--white);
+  --text-odd: var(--black);
+  --bg-even: var(--black);
+  --text-even: var(--white);
+  --card-bg-even: var(--gray-900);
+  --line-even: rgba(255, 255, 255, 0.2);
+
+  /* Component specific light mode variables */
+  --nav-bg: rgba(255, 255, 255, 0.92);
+  --nav-text: var(--black);
+  --nav-border: rgba(0, 0, 0, 0.08);
+  --hero-overlay: linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.6) 100%);
+  --hero-text-shadow: 0 4px 20px rgba(255,255,255,0.8);
+}
+
+[data-theme='dark'] {
+  /* DARK MODE (Black -> White -> Black...) */
+  --bg-odd: var(--black);
+  --text-odd: var(--white);
+  --bg-even: var(--white);
+  --text-even: var(--black);
+  --card-bg-even: var(--gray-100);
+  --line-even: var(--gray-300);
+
+  /* Component specific dark mode variables */
+  --nav-bg: rgba(0, 0, 0, 0.92);
+  --nav-text: var(--white);
+  --nav-border: rgba(255, 255, 255, 0.08);
+  --hero-overlay: linear-gradient(135deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.35) 100%);
+  --hero-text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-odd);
+  color: var(--text-odd);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Utility */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--gray-600); border-radius: 2px; }
+
+/* Selection */
+::selection { background: var(--black); color: var(--white); }
+/* Scroll Animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
