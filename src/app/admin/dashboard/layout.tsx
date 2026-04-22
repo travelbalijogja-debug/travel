@@ -20,6 +20,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     { name: 'Overview', path: '/admin/dashboard', icon: <LayoutDashboardIcon /> },
     { name: 'Reservations', path: '/admin/dashboard/bookings', icon: <CalendarIcon /> },
     { name: 'Packages', path: '/admin/dashboard/packages', icon: <PackageIcon /> },
+    { name: 'FAQ', path: '/admin/dashboard/faq', icon: <FileTextIcon /> },
     { name: 'CMS & Content', path: '/admin/dashboard/cms', icon: <FileTextIcon /> },
     { name: 'Settings', path: '/admin/dashboard/settings', icon: <SettingsIcon /> },
   ];

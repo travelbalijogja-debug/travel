@@ -17,6 +17,11 @@ export default function SettingsPage() {
   const [phone, setPhone] = useState('');
   const [slogan, setSlogan] = useState('');
   const [portfolioBg, setPortfolioBg] = useState('');
+  const [aboutTitle, setAboutTitle] = useState('');
+  const [aboutDescription, setAboutDescription] = useState('');
+  const [aboutH1, setAboutH1] = useState('');
+  const [aboutH2, setAboutH2] = useState('');
+  const [aboutH3, setAboutH3] = useState('');
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [uploadingBg, setUploadingBg] = useState(false);
 
@@ -39,6 +44,11 @@ export default function SettingsPage() {
         setPhone(settings[0].phone_number || '');
         setSlogan(settings[0].slogan || '');
         setPortfolioBg(settings[0].portfolio_background_image || '');
+        setAboutTitle(settings[0].about_title || '');
+        setAboutDescription(settings[0].about_description || '');
+        setAboutH1(settings[0].about_highlight_1 || '');
+        setAboutH2(settings[0].about_highlight_2 || '');
+        setAboutH3(settings[0].about_highlight_3 || '');
       }
       setLoading(false);
     };
@@ -90,9 +100,27 @@ export default function SettingsPage() {
       address: address,
       phone_number: phone,
       slogan: slogan,
-      portfolio_background_image: portfolioBg
+      portfolio_background_image: portfolioBg,
+      about_title: aboutTitle,
+      about_description: aboutDescription,
+      about_highlight_1: aboutH1,
+      about_highlight_2: aboutH2,
+      about_highlight_3: aboutH3,
     });
     if (res) setMessage('Pengaturan website berhasil diperbarui!');
+    setTimeout(() => setMessage(''), 3000);
+  };
+
+  const handleUpdateAbout = async () => {
+    if (!siteSettings) return;
+    const res = await updateSupabase('settings', 'id', siteSettings.id, {
+      about_title: aboutTitle,
+      about_description: aboutDescription,
+      about_highlight_1: aboutH1,
+      about_highlight_2: aboutH2,
+      about_highlight_3: aboutH3,
+    });
+    if (res) setMessage('Tentang Kami berhasil disimpan!');
     setTimeout(() => setMessage(''), 3000);
   };
 
@@ -201,6 +229,34 @@ export default function SettingsPage() {
           </div>
           <button type="submit" disabled={uploadingBg} style={{...btnStyle, filter: uploadingBg ? 'grayscale(1)' : 'none'}}>Save Site Settings</button>
         </form>
+      </section>
+
+      {/* About Section */}
+      <section style={sectionStyle}>
+        <h2 style={titleStyle}>✍️ Tentang Kami (About Section)</h2>
+        <p style={{ fontSize: '0.85rem', color: 'var(--gray-500)', marginBottom: '1.5rem' }}>Muncul di bawah Hero, perkenalkan Noe Travel kepada pengunjung.</p>
+        <div style={formStyle}>
+          <div style={inputGroup}>
+            <label style={labelStyle}>Judul Section (cth: Apa itu Noe Travel Jepara?)</label>
+            <input type="text" value={aboutTitle} onChange={e => setAboutTitle(e.target.value)} style={inputStyle} placeholder="Apa itu Noe Travel Jepara?" />
+          </div>
+          <div style={inputGroup}>
+            <label style={labelStyle}>Deskripsi / Paragraf Tentang Kami</label>
+            <textarea
+              value={aboutDescription}
+              onChange={e => setAboutDescription(e.target.value)}
+              style={{...inputStyle, minHeight: '140px', lineHeight: 1.6}}
+              placeholder="Noe Travel Jepara adalah biro perjalanan resmi yang melayani paket wisata ke Bali, Karimunjawa, Jogja, hingga Cruise Singapore. Berpengalaman melayani ratusan wisatawan dengan mengutamakan kepuasan, keamanan, dan harga yang kompetitif..."
+            />
+          </div>
+          <div style={inputGroup}>
+            <label style={labelStyle}>Highlight / Keunggulan (opsional, tampil sebagai tag)</label>
+            <input type="text" value={aboutH1} onChange={e => setAboutH1(e.target.value)} style={inputStyle} placeholder="cth: Berpengalaman sejak 2019" />
+            <input type="text" value={aboutH2} onChange={e => setAboutH2(e.target.value)} style={inputStyle} placeholder="cth: Harga Terjangkau & Transparan" />
+            <input type="text" value={aboutH3} onChange={e => setAboutH3(e.target.value)} style={inputStyle} placeholder="cth: Layanan Antar Jemput dari Jepara" />
+          </div>
+          <button type="button" onClick={handleUpdateAbout} style={btnStyle}>💾 Simpan Tentang Kami</button>
+        </div>
       </section>
     </div>
   );

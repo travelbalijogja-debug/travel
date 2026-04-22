@@ -7,6 +7,8 @@ interface BookingCard {
   id: string;
   image: string;
   title: string;
+  short_description: string;
+  description: string;
   price: number;
   tags: string[];
 }
@@ -79,45 +81,59 @@ export default function BookingSection({ bookings, phoneNumber }: { bookings?: B
         <div className={styles.grid}>
           {data.map((item) => (
             <div key={item.id} className={styles.card}>
+              {/* Image */}
               <div className={styles.imgWrap}>
                 <img
                   src={item.image}
                   alt={item.title}
                   className={styles.img}
                   onError={e => {
-                    (e.target as HTMLImageElement).src = `https://picsum.photos/seed/${item.id}book/600/800`;
+                    (e.target as HTMLImageElement).src = `https://picsum.photos/seed/${item.id}book/600/400`;
                   }}
                 />
-                <div className={styles.overlay} />
-                
-                <div className={styles.content}>
-                  <div className={styles.dots}>...</div>
-                  <h3 className={styles.title}>{item.title}</h3>
-                  
-                  <ul className={styles.inclusionList}>
-                    <li>✓ Hotel & Akomodasi</li>
-                    <li>✓ Transportasi Premium</li>
-                    <li>✓ Tiket Wisata & Retribusi</li>
-                    <li>✓ Tour Guide & Fotografer</li>
-                  </ul>
-                  
-                  <div className={styles.tagsRow}>
-                    {item.tags.map(tag => (
-                      <span key={tag} className={styles.tag}>{tag}</span>
-                    ))}
-                  </div>
+              </div>
 
-                  <div className={styles.priceActionContainer}>
-                    <div className={styles.priceBlock}>
-                      <span className={styles.priceLabel}>Start from</span>
-                      <span className={styles.priceAmount}>Rp {item.price.toLocaleString('id-ID')}</span>
-                    </div>
-                  
-                    <button onClick={() => handleOpenModal(item)} className={styles.reserveBtn}>
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px' }}><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                      Booking Now
-                    </button>
+              {/* Content */}
+              <div className={styles.content}>
+                <h3 className={styles.title}>{item.title}</h3>
+
+                <ul className={styles.inclusionList}>
+                  {item.short_description && item.short_description.trim()
+                    ? item.short_description.split('\n').map(l => l.trim()).filter(Boolean).map((feat, idx) => (
+                        <li key={idx}>{feat}</li>
+                      ))
+                    : (() => {
+                        const loc = (item.tags[0] || '').toLowerCase();
+                        const title = item.title.toLowerCase();
+                        if (loc.includes('karimunjawa') || title.includes('karimunjawa')) return (<><li>✓ Kapal Siginjai PP</li><li>✓ Makan 5x + BBQ Seafood</li><li>✓ Snorkeling & Island Hopping</li></>);
+                        if (loc.includes('bali') || title.includes('bali')) return (<><li>✓ Hotel Bintang 4 + Breakfast</li><li>✓ Transport Private + Driver</li><li>✓ Tiket Wisata & Tour Guide</li></>);
+                        if (loc.includes('jogja') || title.includes('jogja')) return (<><li>✓ Hotel + Breakfast</li><li>✓ Transport & Tiket Masuk</li><li>✓ Guide Profesional</li></>);
+                        if (loc.includes('singapore') || title.includes('singapore')) return (<><li>✓ Tiket Cruise / Pesawat</li><li>✓ Akomodasi & Transport</li><li>✓ Tour Guide Berpengalaman</li></>);
+                        return (<><li>✓ Akomodasi Terbaik</li><li>✓ Transport & Driver</li><li>✓ Guide Profesional</li></>);
+                      })()
+                  }
+                </ul>
+
+                <div className={styles.tagsRow}>
+                  {item.tags.map(tag => (
+                    <span key={tag} className={styles.tag}>{tag}</span>
+                  ))}
+                </div>
+
+                {/* Price + CTA — pushed to bottom */}
+                <div className={styles.priceActionContainer}>
+                  <div className={styles.priceBlock}>
+                    <span className={styles.priceLabel}>Start from</span>
+                    <span className={styles.priceAmount}>
+                      {item.price > 0
+                        ? `Rp ${item.price.toLocaleString('id-ID')}`
+                        : 'Price by Request'}
+                    </span>
                   </div>
+                  <button onClick={() => handleOpenModal(item)} className={styles.reserveBtn}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px' }}><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                    Booking Now
+                  </button>
                 </div>
               </div>
             </div>
@@ -132,6 +148,13 @@ export default function BookingSection({ bookings, phoneNumber }: { bookings?: B
             <button className={styles.closeBtn} onClick={() => setShowModal(false)}>&times;</button>
             <h3 className={styles.modalTitle}>Detail Reservasi</h3>
             <p className={styles.modalSubtitle}>Paket: <strong>{selectedPkg.title}</strong></p>
+
+            <div style={{ margin: '1.5rem 0', padding: '1.2rem', background: 'rgba(0,0,0,0.04)', borderRadius: '12px', border: '1px solid rgba(0,0,0,0.08)' }}>
+              <h4 style={{ fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.8rem', color: '#27ae60', fontWeight: 800 }}>Itinerary & Fasilitas</h4>
+              <p style={{ fontSize: '0.85rem', whiteSpace: 'pre-line', lineHeight: '1.6', color: '#2c3e50', fontWeight: 500 }}>
+                {selectedPkg.description}
+              </p>
+            </div>
             
             <form onSubmit={handleSubmit} className={styles.form}>
               <div className={styles.inputGroup}>

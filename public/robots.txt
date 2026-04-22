@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Blokir akses ke admin
+Disallow: /admin/
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://noetravel.id/sitemap.xml
