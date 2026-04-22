@@ -53,7 +53,17 @@ export default function DestinationSection({ destinations }: { destinations?: De
                 key={dest.id} 
                 className={`${styles.listItem} ${idx === activeIdx ? styles.activeItem : ''}`}
                 onMouseEnter={() => setActiveIdx(idx)}
+                onClick={() => setActiveIdx(idx)}
               >
+                {/* Gambar per-item khusus mobile */}
+                <img
+                  src={dest.image}
+                  alt={dest.place}
+                  className={styles.mobileImg}
+                  onError={e => {
+                    (e.target as HTMLImageElement).src = `https://picsum.photos/seed/${dest.id}dest/600/400`;
+                  }}
+                />
                 <div className={styles.itemHeader}>
                   <span className={styles.itemNumber}>0{idx + 1}</span>
                   <h3 className={styles.itemPlace}>{dest.place}</h3>

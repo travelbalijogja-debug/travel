@@ -11,6 +11,11 @@
   width: 100%;
 }
 
+/* Mobile per-item image — hidden on desktop */
+.mobileImg {
+  display: none;
+}
+
 /* Left Column - Sticky Image */
 .imageColumn {
   position: relative;
@@ -152,7 +157,7 @@
   margin-top: 0.8rem;
 }
 
-/* Responsive */
+/* Responsive — Tablet */
 @media (max-width: 1024px) {
   .inner {
     flex-direction: column;
@@ -161,42 +166,104 @@
   .imageColumn {
     position: relative;
     width: 100%;
-    height: auto;
+    height: 50vw;
+    max-height: 420px;
     background-color: var(--bg-even);
   }
 
   .imageFade {
-    position: relative;
-    inset: auto;
+    position: absolute;
+    inset: 0;
     width: 100%;
-    height: auto;
-    aspect-ratio: 16/9; /* Or naturally sizing */
-    display: none;
-    transform: none;
+    height: 100%;
+    aspect-ratio: unset;
+    display: block;
+    transform: scale(1.05);
   }
   
   .activeImage {
-    display: block;
     opacity: 1;
     transform: scale(1);
     object-fit: cover;
   }
   
   .imageOverlay {
-    background: linear-gradient(to bottom, transparent 60%, var(--bg-even) 100%);
+    background: linear-gradient(to bottom, transparent 50%, var(--bg-even) 100%);
   }
+
+  .imageCaption { display: none; }
 
   .listColumn {
     padding: 1rem 2rem 3rem 2rem;
   }
 }
 
+/* Mobile — setiap item punya gambarnya sendiri */
 @media (max-width: 600px) {
+  /* Sembunyikan sticky image column di mobile */
+  .imageColumn { display: none; }
+
+  .inner {
+    flex-direction: column;
+    min-height: unset;
+  }
+
   .listColumn {
-    padding: 3rem 1rem;
+    padding: 3rem 1rem 2rem;
+  }
+
+  .destinationList {
+    gap: 0;
+  }
+
+  /* Setiap item di mobile dapat gambarnya sendiri */
+  .listItem {
+    padding: 0;
+    border-bottom: none;
+    margin-bottom: 1.2rem;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--card-bg-even);
+    border: 1px solid var(--line-even);
+    opacity: 1;
+  }
+
+  .listItem:hover { opacity: 1; }
+
+  .activeItem {
+    padding-left: 0;
+    opacity: 1;
+  }
+
+  /* Gambar individual per item di mobile */
+  .listItem .mobileImg {
+    display: block;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .itemHeader {
+    padding: 1rem;
+    gap: 1rem;
   }
 
   .itemPlace {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
+    letter-spacing: 0;
+    text-transform: uppercase;
   }
-}
+
+  .itemDetail {
+    height: auto !important;
+    opacity: 1 !important;
+    margin-top: 0 !important;
+    padding: 0 1rem 1rem;
+    color: var(--gray-400);
+    font-size: 0.85rem;
+  }
+
+  .activeItem .itemDetail {
+    height: auto;
+  }
+}  
