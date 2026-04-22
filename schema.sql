@@ -13,7 +13,9 @@ CREATE TABLE admins (
 CREATE TABLE settings (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     logo_text VARCHAR(255) DEFAULT 'NORTH TOUR',
-    phone_number VARCHAR(255) DEFAULT '+62 812-3456-7890',
+    logo_url TEXT,
+    address TEXT DEFAULT 'Jl. Sukarno Hatta No. 27, Bok Biru, Tahunan, Jepara',
+    phone_number VARCHAR(255) DEFAULT '+62 896-7865-7991',
     slogan VARCHAR(500) DEFAULT 'BUS TO THE SEA - FAST, ECONOMICAL, COMFORTABLE',
     portfolio_background_image TEXT DEFAULT 'https://picsum.photos/seed/bali_bg/1920/1080',
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP

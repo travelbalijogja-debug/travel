@@ -5,6 +5,7 @@ import styles from './Navbar.module.css';
 
 interface SiteSettings {
   logo_text?: string;
+  logo_url?: string;
   phone_number?: string;
 }
 
@@ -66,8 +67,14 @@ export default function Navbar({ settings }: { settings?: SiteSettings }) {
       <div className={styles.inner}>
         {/* Logo */}
         <Link href="/" className={styles.logo} id="nav-logo">
-          <span className={styles.logoIcon}>✦</span>
-          <span className={styles.logoText}>{settings?.logo_text || 'NORTH TOUR'}</span>
+          {settings?.logo_url ? (
+            <img src={settings.logo_url} alt="Logo" className={styles.logoImage} />
+          ) : (
+            <>
+              <span className={styles.logoIcon}>✦</span>
+              <span className={styles.logoText}>{settings?.logo_text || 'NORTH TOUR'}</span>
+            </>
+          )}
         </Link>
 
         {/* Primary Nav */}

@@ -83,7 +83,7 @@ export default async function Home() {
       </div>
 
       <div className="reveal">
-        <BookingSection bookings={packages} />
+        <BookingSection bookings={packages} phoneNumber={settings.phone_number} />
       </div>
     </main>
   );

@@ -12,9 +12,12 @@ export default function SettingsPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [logoText, setLogoText] = useState('');
+  const [logoUrl, setLogoUrl] = useState('');
+  const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
   const [slogan, setSlogan] = useState('');
   const [portfolioBg, setPortfolioBg] = useState('');
+  const [uploadingLogo, setUploadingLogo] = useState(false);
   const [uploadingBg, setUploadingBg] = useState(false);
 
   useEffect(() => {
@@ -31,6 +34,8 @@ export default function SettingsPage() {
       if (settings?.[0]) {
         setSiteSettings(settings[0]);
         setLogoText(settings[0].logo_text || '');
+        setLogoUrl(settings[0].logo_url || '');
+        setAddress(settings[0].address || '');
         setPhone(settings[0].phone_number || '');
         setSlogan(settings[0].slogan || '');
         setPortfolioBg(settings[0].portfolio_background_image || '');
@@ -39,6 +44,20 @@ export default function SettingsPage() {
     };
     loadData();
   }, []);
+
+  const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingLogo(true);
+    const uploadedUrl = await uploadFile(file);
+    if (uploadedUrl) {
+      setLogoUrl(uploadedUrl);
+    } else {
+      alert('Gagal mengunggah logo.');
+    }
+    setUploadingLogo(false);
+  };
 
   const handleBgUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -67,6 +86,8 @@ export default function SettingsPage() {
     if (!siteSettings) return;
     const res = await updateSupabase('settings', 'id', siteSettings.id, {
       logo_text: logoText,
+      logo_url: logoUrl,
+      address: address,
       phone_number: phone,
       slogan: slogan,
       portfolio_background_image: portfolioBg
@@ -108,8 +129,34 @@ export default function SettingsPage() {
         <h2 style={titleStyle}>Site Identity & Global Content</h2>
         <form onSubmit={handleUpdateSite} style={formStyle}>
           <div style={inputGroup}>
-            <label style={labelStyle}>Logo Text</label>
+            <label style={labelStyle}>Logo Image (Optional)</label>
+            <div 
+              onClick={() => document.getElementById('logo-upload')?.click()}
+              style={{ 
+                height: '100px', width: '100px', border: '2px dashed var(--line-even)', borderRadius: '12px', 
+                display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
+                backgroundColor: 'rgba(255,255,255,0.02)', position: 'relative', overflow: 'hidden',
+                marginTop: '0.5rem'
+              }}
+            >
+              {logoUrl ? (
+                <img src={logoUrl} alt="logo preview" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+              ) : (
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '1.5rem' }}>🖼️</div>
+                  <p style={{ fontSize: '0.7rem', color: 'var(--gray-500)' }}>{uploadingLogo ? '...' : 'Upload'}</p>
+                </div>
+              )}
+              <input type="file" id="logo-upload" hidden accept="image/*" onChange={handleLogoUpload} />
+            </div>
+          </div>
+          <div style={inputGroup}>
+            <label style={labelStyle}>Company Name / Logo Text</label>
             <input type="text" value={logoText} onChange={e => setLogoText(e.target.value)} style={inputStyle} />
+          </div>
+          <div style={inputGroup}>
+            <label style={labelStyle}>Office Address</label>
+            <textarea value={address} onChange={e => setAddress(e.target.value)} style={{...inputStyle, height: '60px'}} />
           </div>
           <div style={inputGroup}>
             <label style={labelStyle}>WhatsApp / Phone Number</label>

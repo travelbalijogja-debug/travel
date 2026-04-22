@@ -11,7 +11,7 @@ interface BookingCard {
   tags: string[];
 }
 
-export default function BookingSection({ bookings }: { bookings?: BookingCard[] }) {
+export default function BookingSection({ bookings, phoneNumber }: { bookings?: BookingCard[], phoneNumber?: string }) {
   const [selectedPkg, setSelectedPkg] = useState<BookingCard | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -53,8 +53,9 @@ export default function BookingSection({ bookings }: { bookings?: BookingCard[] 
     
     if (result) {
       // Redirect to WhatsApp with info
-      const waMessage = `Halo Admin NorthTour!%0A%0ASaya ingin memesan paket: *${selectedPkg.title}*%0A%0A*Data Pemesan:*%0ANama: ${formData.name}%0ANo HP: ${formData.phone}%0ATanggal: ${formData.date}%0AJumlah Orang: ${formData.people}%0ACatatan: ${formData.notes || '-'}`;
-      window.open(`https://wa.me/6281234567890?text=${waMessage}`, '_blank');
+      const cleanPhone = (phoneNumber || '6289678657991').replace(/\D/g, '');
+      const waMessage = `Halo Admin Noe Travel Jepara!%0A%0ASaya ingin memesan paket: *${selectedPkg.title}*%0A%0A*Data Pemesan:*%0ANama: ${formData.name}%0ANo HP: ${formData.phone}%0ATanggal: ${formData.date}%0AJumlah Orang: ${formData.people}%0ACatatan: ${formData.notes || '-'}`;
+      window.open(`https://wa.me/${cleanPhone}?text=${waMessage}`, '_blank');
       
       // Close modal and reset
       setShowModal(false);

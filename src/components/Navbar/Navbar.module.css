@@ -50,6 +50,12 @@
   white-space: nowrap;
 }
 
+.logoImage {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
 /* Nav Links */
 .navLinks {
   display: flex;
