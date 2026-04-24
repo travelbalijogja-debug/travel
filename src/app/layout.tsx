@@ -6,6 +6,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://neotraveljepara.my
 const BRAND = 'Noe Travel Jepara';
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   // ── Core ──────────────────────────────────────────
   title: {
     default: `${BRAND} — Paket Wisata Bali, Karimunjawa & Cruise Singapore`,
@@ -47,14 +48,6 @@ export const metadata: Metadata = {
     title: `${BRAND} — Paket Wisata Bali, Karimunjawa & Cruise Singapore`,
     description:
       'Paket wisata terbaik dari Jepara. Bali, Karimunjawa, Jogja, hingga Cruise Singapore dengan harga kompetitif dan pelayanan profesional.',
-    images: [
-      {
-        url: `${SITE_URL}/og-image.jpg`,
-        width: 1200,
-        height: 630,
-        alt: `${BRAND} — Paket Wisata Terbaik`,
-      },
-    ],
   },
 
   // ── Twitter / X Card ──────────────────────────────
@@ -62,7 +55,6 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: `${BRAND} — Paket Wisata Bali & Karimunjawa`,
     description: 'Paket wisata terbaik dari Jepara. Bali, Karimunjawa, Jogja, hingga Cruise Singapore.',
-    images: [`${SITE_URL}/og-image.jpg`],
   },
 
   // ── Favicon & Icons ───────────────────────────
