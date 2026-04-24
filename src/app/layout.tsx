@@ -65,11 +65,9 @@ export const metadata: Metadata = {
     images: [`${SITE_URL}/og-image.jpg`],
   },
 
-  // ── Favicon & Icons ───────────────────────────────
-  icons: {
-    icon: '/favicon.ico',
-    apple: '/apple-touch-icon.png',
-  },
+  // ── Favicon & Icons ───────────────────────────
+  // Next.js otomatis pakai icon.png dari src/app/
+  // Pastikan favicon.ico lama sudah dihapus dari src/app/
 
   // ── Verification (isi setelah submit ke Google Search Console) ──
   // verification: { google: 'YOUR_GOOGLE_VERIFICATION_CODE' },
