@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import ScrollReveal from "@/components/ScrollReveal";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://noetravel.jepara.my.id';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://neotraveljepara.my.id';
 const BRAND = 'Noe Travel Jepara';
 
 export const metadata: Metadata = {
