@@ -149,7 +149,7 @@ export default function BookingSection({ bookings, phoneNumber }: { bookings?: B
             <h3 className={styles.modalTitle}>Detail Reservasi</h3>
             <p className={styles.modalSubtitle}>Paket: <strong>{selectedPkg.title}</strong></p>
 
-            <div style={{ margin: '1.5rem 0', padding: '1.2rem', background: 'rgba(0,0,0,0.04)', borderRadius: '12px', border: '1px solid rgba(0,0,0,0.08)' }}>
+            <div style={{ margin: '1.5rem 0', padding: '1.2rem', background: 'rgba(0,0,0,0.04)', borderRadius: '12px', border: '1px solid rgba(0,0,0,0.08)', maxHeight: '200px', overflowY: 'auto' }}>
               <h4 style={{ fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.8rem', color: '#27ae60', fontWeight: 800 }}>Itinerary & Fasilitas</h4>
               <p style={{ fontSize: '0.85rem', whiteSpace: 'pre-line', lineHeight: '1.6', color: '#2c3e50', fontWeight: 500 }}>
                 {selectedPkg.description}
