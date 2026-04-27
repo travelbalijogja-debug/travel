@@ -40,33 +40,38 @@ export default function BookingSection({ bookings, phoneNumber }: { bookings?: B
 
     setIsSubmitting(true);
     
-    // Save to Supabase
-    const payload = {
-      package_id: selectedPkg.id,
-      name: formData.name,
-      email: '-', 
-      phone: formData.phone,
-      booking_date: formData.date,
-      notes: `${formData.notes} (Jumlah Orang: ${formData.people})`, // Embedding people info into notes for now or we could add a column
-      status: 'PENDING'
-    };
+    try {
+      // Save to Supabase
+      const payload = {
+        package_id: selectedPkg.id,
+        name: formData.name,
+        email: '-', 
+        phone: formData.phone,
+        booking_date: formData.date,
+        notes: `${formData.notes} (Jumlah Orang: ${formData.people})`, // Embedding people info into notes for now or we could add a column
+        status: 'PENDING'
+      };
 
-    const result = await insertSupabase('bookings', payload);
-    
-    if (result) {
-      // Redirect to WhatsApp with info
-      const cleanPhone = (phoneNumber || '6289678657991').replace(/\D/g, '');
-      const rawMessage = `Halo Admin Noe Travel Jepara!\n\nSaya ingin memesan paket: *${selectedPkg.title}*\n\n*Data Pemesan:*\nNama: ${formData.name}\nNo HP: ${formData.phone}\nTanggal: ${formData.date}\nJumlah Orang: ${formData.people}\nCatatan: ${formData.notes || '-'}`;
-      window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(rawMessage)}`, '_blank');
+      const result = await insertSupabase('bookings', payload);
       
-      // Close modal and reset
-      setShowModal(false);
-      setFormData({ name: '', phone: '', date: '', people: '1', notes: '' });
-    } else {
-      alert('Gagal mengirim pesanan. Silakan coba lagi.');
+      if (result) {
+        // Redirect to WhatsApp with info
+        const cleanPhone = (phoneNumber || '6289678657991').replace(/\D/g, '');
+        const rawMessage = `Halo Admin Noe Travel Jepara!\n\nSaya ingin memesan paket: *${selectedPkg.title}*\n\n*Data Pemesan:*\nNama: ${formData.name}\nNo HP: ${formData.phone}\nTanggal: ${formData.date}\nJumlah Orang: ${formData.people}\nCatatan: ${formData.notes || '-'}`;
+        window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(rawMessage)}`, '_blank');
+        
+        // Close modal and reset
+        setShowModal(false);
+        setFormData({ name: '', phone: '', date: '', people: '1', notes: '' });
+      } else {
+        alert('Gagal mengirim pesanan. Silakan coba lagi.');
+      }
+    } catch (error) {
+      console.error('Submit error:', error);
+      alert('Terjadi kesalahan tidak terduga. Silakan coba lagi.');
+    } finally {
+      setIsSubmitting(false);
     }
-    
-    setIsSubmitting(false);
   };
 
   return (
